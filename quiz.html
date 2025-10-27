@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>自己紹介クイズ</title>
+  <style>
+    body {
+      font-family: "Hiragino Sans", "Arial", sans-serif;
+      background-color: #e0f7fa; /* 淡いターコイズ */
+      color: #004d40; /* 深い青緑 */
+      text-align: center;
+      padding: 40px;
+      margin: 0;
+    }
+
+    h1 {
+      color: #00796b;
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+
+    .question {
+      font-size: 1.3rem;
+      margin: 20px;
+    }
+
+    button {
+      background-color: #00bfa5; /* ターコイズ系ボタン */
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #009e8e; /* 濃いめのターコイズ */
+    }
+
+    #result {
+      font-size: 1.2rem;
+      margin-top: 30px;
+      font-weight: bold;
+      color: #00695c;
+    }
+
+    a.back-button {
+      display: inline-block;
+      margin-top: 30px;
+      background-color: #00695c;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    a.back-button:hover {
+      background-color: #009e8e;
+    }
+  </style>
+</head>
+<body>
+  <h1>自己紹介クイズ</h1>
+
+  <div class="question" id="question"></div>
+  <div id="answers"></div>
+  <p id="result"></p>
+
+  <a href="index.html" class="back-button">← 戻る</a>
+
+  <script>
+    const quizData = [
+      {
+        question: "どのSUNABACO拠点で参加する？",
+        answers: ["高松", "八代", "今治"],
+        correct: "今治"
+      },
+      {
+        question: "受講のお供は？",
+        answers: ["コーヒー", "紅茶", "水"],
+        correct: "コーヒー"
+      },
+      {
+        question: "私の趣味は？",
+        answers: ["映画鑑賞", "ミュージカル観劇", "料理"],
+        correct: "ミュージカル観劇"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    const questionEl = document.getElementById("question");
+    const answersEl = document.getElementById("answers");
+    const resultEl = document.getElementById("result");
+
+    function showQuiz() {
+      const q = quizData[current];
+      questionEl.textContent = q.question;
+      answersEl.innerHTML = "";
+      q.answers.forEach(answer => {
+        const btn = document.createElement("button");
+        btn.textContent = answer;
+        btn.onclick = () => checkAnswer(answer);
+        answersEl.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(answer) {
+      if (answer === quizData[current].correct) {
+        alert("🎉 正解！");
+        score++;
+      } else {
+        alert("❌ 不正解！");
+      }
+      current++;
+      if (current < quizData.length) {
+        showQuiz();
+      } else {
+        questionEl.textContent = "クイズ終了！";
+        answersEl.innerHTML = "";
+        resultEl.textContent = `あなたのスコアは ${score} / ${quizData.length} です！`;
+      }
+    }
+
+    showQuiz();
+  </script>
+</body>
+</html>
